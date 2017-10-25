@@ -9,6 +9,10 @@
     let renderer = new THREE.WebGLRenderer();
     renderer.setSize(window.innerWidth, window.innerHeight);
     document.body.appendChild(renderer.domElement);
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.soft = true;
+    renderer.shadowMap.type = THREE.PCFShadowMap;
+
 
     camera.position.z = 60;
     camera.position.y = 15;
@@ -19,6 +23,7 @@
         color: 0xffffff
     });
     let plane = new THREE.Mesh(planeGeometry, groundMaterial);
+    plane.receiveShadow  = true;
     let mesh;
 
     let loader = new THREE.TextureLoader();
@@ -32,6 +37,8 @@
         mesh = new THREE.Mesh(geometry, material);
 
         mesh.position.y = 25;
+
+        mesh.castShadow = true;
         scene.add(mesh);
     })
 
@@ -43,11 +50,13 @@
 
     //let mesh = new THREE.Mesh(geometry, groundMaterial);
 
-    let pointLight = new THREE.PointLight(0x404040);
+    let pointLight = new THREE.PointLight(0x606060);
 
-    pointLight.position.y = 80;
+    pointLight.position.y = 60;
     pointLight.position.z = 20;
-    
+
+    pointLight.castShadow = true;
+
     scene.background = new THREE.Color(0xeeeeee);
     scene.add(new THREE.AmbientLight(0x404040));
     scene.add(plane);
